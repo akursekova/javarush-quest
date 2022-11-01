@@ -14,6 +14,11 @@
 <form action="tellLie" method="POST">
   <h3>Your lies have been exposed. You have lost.</h3>
 </form>
+
+<form action="restart" method="POST">
+  <button name="restart">Start again</button>
+</form>
+
 <script>
 </script>
 

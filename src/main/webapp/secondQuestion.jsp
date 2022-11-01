@@ -24,6 +24,22 @@
 
   <button>Answer</button>
 
+  <%
+    String name=(String)session.getAttribute("userName");
+    String ipAddress=(String)session.getAttribute("ipAddress");
+    Integer numberOfGames = (Integer) session.getAttribute("numberOfGames");
+
+  %>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  Statistics:<br>
+  IP address: <b> <%=ipAddress %></b> <br>
+  Entered name: <b> <%=name %></b> <br>
+  Played games: <b> <%=numberOfGames %></b> <br>
+
 
 </form>
 <script>

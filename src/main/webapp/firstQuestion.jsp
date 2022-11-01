@@ -1,4 +1,3 @@
-<%@ page import="dev.akursekova.app.GameCounter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -19,11 +18,6 @@
         <td><input type="radio" name="decision" value="accept" />Accept challenge<br>
             <input type="radio" name="decision" value="reject" />Reject challenge</td><br>
 
-<%--    <select name="decision">--%>
-<%--        <option>Accept challenge</option>--%>
-<%--        <option>Reject challenge</option>--%>
-<%--    </select>--%>
-
     <button>Answer</button><br>
 
     <%
@@ -32,9 +26,15 @@
         Integer numberOfGames = (Integer) session.getAttribute("numberOfGames");
 
     %>
-    Entered Name is <b> <%=name %></b> <br>
-    IP is <b> <%=ipAddress %></b> <br>
-    Played games <b> <%=numberOfGames %></b> <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    Statistics:<br>
+    IP address: <b> <%=ipAddress %></b> <br>
+    Entered name: <b> <%=name %></b> <br>
+    Played games: <b> <%=numberOfGames %></b> <br>
 
 
 </form>

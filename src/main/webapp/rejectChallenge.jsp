@@ -12,13 +12,8 @@
     <title>First question</title>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<%--    <script src="/static/jquery-3.6.0.min.js"></script>--%>
-<%--    <script src="/lib/jquery.plugin.js"></script>--%>
-
 </head>
 <body>
-
-
 
 <form action="rejectChallenge" method="POST">
     <h3>You have rejected the challenge. You have lost.</h3>

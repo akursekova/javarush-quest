@@ -14,6 +14,11 @@
 <form action="rejectBridge" method="POST">
     <h3>You have not negotiated. You have lost.</h3>
 </form>
+
+<form action="restart" method="POST">
+    <button name="restart">Start again</button>
+</form>
+
 <script>
 </script>
 

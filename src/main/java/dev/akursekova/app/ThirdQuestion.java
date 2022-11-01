@@ -8,10 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
-// Servlet implementation class FormDataHandle
-
-// Annotation to map the Servlet URL
 @WebServlet(name = "ThirdQuestion", value = "/thirdQuestion")
 public class ThirdQuestion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,6 +29,5 @@ public class ThirdQuestion extends HttpServlet {
             out.println("</script>");
         }
     }
-
 }
 

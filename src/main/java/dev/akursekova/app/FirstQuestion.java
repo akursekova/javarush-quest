@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// Servlet implementation class FormDataHandle
-
-// Annotation to map the Servlet URL
 @WebServlet(name = "FirstQuestion", value = "/firstQuestion")
 public class FirstQuestion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
