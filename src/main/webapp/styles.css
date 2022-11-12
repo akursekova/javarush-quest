@@ -1,0 +1,88 @@
+/* Container holding the image and the text */
+.container {
+    position: relative;
+    text-align: center;
+    color: cornflowerblue;
+    /*color: salmon;*/
+}
+
+/* Bottom left text */
+.bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    color: cornflowerblue;
+}
+
+/* Top left text */
+.top-left {
+    width: 450px;
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-family: Copperplate;
+    text-align: justify;
+    font-size: large;
+}
+
+/* Top right text */
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+}
+
+/* Centered text */
+.centered {
+    width: 850px;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Copperplate;
+    text-align: justify;
+    font-size: large;
+}
+
+/*#submit {*/
+/*    color: #fff;*/
+/*    font-size: 0;*/
+/*    width: 135px;*/
+/*    height: 60px;*/
+/*    border: none;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    background: #0c0 url(image) 0 0 no-repeat;*/
+/*}*/
+
+input[type=submit] {
+    padding: 5px 15px;
+    background: cornflowerblue;
+    border: 0 none;
+    /*text-decoration-color: aliceblue;*/
+    color: aliceblue;
+    font-family: Copperplate;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=text] {
+    background: azure;
+    border-color: azure;
+    box-shadow: azure;
+    border-style:solid;
+    border-radius: 5px;
+    font-family: Copperplate;
+    color: hotpink;
+    font-size: small;
+}
+
+
