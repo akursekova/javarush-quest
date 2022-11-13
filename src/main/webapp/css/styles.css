@@ -41,7 +41,7 @@
 
 /* Centered text */
 .centered {
-    width: 400px;
+    width: 600px;
     position: absolute;
     top: 60%;
     left: 50%;
@@ -50,17 +50,6 @@
     text-align: justify;
     font-size: large;
 }
-
-/*#submit {*/
-/*    color: #fff;*/
-/*    font-size: 0;*/
-/*    width: 135px;*/
-/*    height: 60px;*/
-/*    border: none;*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    background: #0c0 url(image) 0 0 no-repeat;*/
-/*}*/
 
 input[type=submit] {
     padding: 5px 15px;
@@ -85,4 +74,14 @@ input[type=text] {
     font-size: small;
 }
 
+.modal-backdrop {
+    /* bug fix - no overlay */
+    display: none;
+    z-index: -1;
+}
+
+.modal {
+    z-index: 9999;
+    background-color:transparent!important;
+}
 

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @WebServlet(name = "ApplicationServlet", value = "/quest")
 public class ApplicationServlet extends HttpServlet {
@@ -32,7 +31,7 @@ public class ApplicationServlet extends HttpServlet {
             System.out.println("this is the very first question or user restarted the quest");
             currentQuestion = questService.q7;
             session.setAttribute("currentQuestion", currentQuestion);
-            session.setAttribute("restart", false);
+            session.setAttribute("questRestarted", false);
         }
 
         //not a first question
@@ -49,23 +48,22 @@ public class ApplicationServlet extends HttpServlet {
         System.out.println("doPost started");
         HttpSession session = request.getSession(true);
 
-        int gameCounter;
+        int numberOfGames;
+
 
         //if user not introduced
         if (session.getAttribute("user") == null){
-            System.out.println("DOPOST: this is the beginning of the quest");
+            numberOfGames = 0;
             String user = request.getParameter("name");
-            session.setAttribute("user", user);
-            System.out.println("username specified. Ready to start the quest");
-
-            //STATS
-            gameCounter = 0;
-            System.out.println("it's a new user. GameCounter = " + session.getAttribute("numberOfGames"));
             String ipAddress = request.getRemoteAddr();
-            session.setAttribute("ipAddress", ipAddress);
-            session.setAttribute("numberOfGames", gameCounter);
-            System.out.println("gameCounter = " + gameCounter);
-            //STATS
+            initializeStatistics(user, ipAddress, numberOfGames, false, session);
+
+            //to remove
+            System.out.println("DOPOST: this is the beginning of the quest");
+            System.out.println("username specified. Ready to start the quest");
+            System.out.println("it's a new user. GameCounter = " + session.getAttribute("numberOfGames"));
+            System.out.println("numberOfGames = " + numberOfGames);
+            //to remove
 
             response.sendRedirect(request.getContextPath() +"/quest");
         }
@@ -74,10 +72,10 @@ public class ApplicationServlet extends HttpServlet {
             String buttonClicked = request.getParameter("answer");
             if (buttonClicked.equals("Answer")){
                 System.out.println("Answer button clicked");
+
                 Question currentQuestion = (Question) session.getAttribute("currentQuestion");
 
-                //if user didn't make the choice
-                if (request.getParameter("decision") == null) {
+                if (!answerSelected(request)) {
                     System.out.println("user did not choose anything");
                     request.getRequestDispatcher("/question.jsp").forward(request, response);
                 }
@@ -87,20 +85,19 @@ public class ApplicationServlet extends HttpServlet {
                 currentQuestion = currentQuestion.answers.get(userChoice).nextQuestion;
 
 
+                //To delete
                 System.out.println("new current question = " + currentQuestion.text + " " + currentQuestion);
                 System.out.println("new current question isWin = " + currentQuestion.isWin);
                 System.out.println("new current question isLoose = " + currentQuestion.isLoose);
+                //To delete
 
-                //TEST
-                if (currentQuestion.isWin == true || currentQuestion.isLoose == true){
-                    System.out.println("gameCounter from session BEFORE increment= " + session.getAttribute("numberOfGames"));
-                    //System.out.println("gameCounter VARIABLE BEFORE increment= " + gameCounter);
-                    gameCounter = (int) session.getAttribute("numberOfGames") + 1;
-                    System.out.println("gameCounter VARIABLE AFTER increment= " + gameCounter);
-                    session.setAttribute("numberOfGames", gameCounter);
-                    System.out.println("gameCounter from session AFTER increment= " + session.getAttribute("numberOfGames"));
+                if (gameFinished(currentQuestion)){
+                    System.out.println("numberOfGames from session BEFORE increment= " + session.getAttribute("numberOfGames"));
+                    numberOfGames = (int) session.getAttribute("numberOfGames") + 1;
+                    System.out.println("numberOfGames VARIABLE AFTER increment= " + numberOfGames);
+                    session.setAttribute("numberOfGames", numberOfGames);
+                    System.out.println("numberOfGames from session AFTER increment= " + session.getAttribute("numberOfGames"));
                 }
-                //TEST
 
                 session.setAttribute("currentQuestion", currentQuestion);
                 response.sendRedirect(request.getContextPath() +"/quest");
@@ -108,7 +105,7 @@ public class ApplicationServlet extends HttpServlet {
             //if user clicked restart
             else {
                 System.out.println("Restart button clicked");
-                session.setAttribute("restart", true);
+                session.setAttribute("questRestarted", true);
                 response.sendRedirect(request.getContextPath() +"/quest");
             }
 
@@ -116,17 +113,23 @@ public class ApplicationServlet extends HttpServlet {
     }
 
     private boolean questRestarted(HttpSession session){
-        if(session.getAttribute("restart") != null){
-            boolean questRestarted = (Boolean) session.getAttribute("restart");
-            if (questRestarted) {
-                System.out.println("user wants to restart the game");
-                return true;
-            }
-        }
-        return false;
+        boolean questRestarted = (Boolean) session.getAttribute("questRestarted");
+        return questRestarted? true : false;
     }
 
+    private void initializeStatistics(String user, String ipAddress, int numberOfGames, Boolean questRestarted, HttpSession session){
+        session.setAttribute("user", user);
+        session.setAttribute("ipAddress", ipAddress);
+        session.setAttribute("numberOfGames", numberOfGames);
+        session.setAttribute("questRestarted", questRestarted);
+    }
+
+    private boolean gameFinished(Question question){
+        return (question.isWin == true || question.isLoose == true)? true : false;
+    }
+
+    private boolean answerSelected(HttpServletRequest request){
+        return (request.getParameter("decision") == null)? false : true;
+    }
 }
 
-
-//todo стили

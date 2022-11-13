@@ -3,12 +3,12 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="<c:url value='/styles.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/css/styles.css' />">
 
 </head>
 <body>
 <div class="container">
-    <img src="<c:url value='/img/ufos.jpeg'/>" class="img-fluid" alt="Responsive image">
+    <img src="<c:url value='/img/ufo.jpeg'/>" class="img-fluid" alt="Responsive image">
     <div class="top-left">
         You are standing in a spaceport and ready to board your ship.<br>
         Isn't that what you've been dreaming about?<br>
