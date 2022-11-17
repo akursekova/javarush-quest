@@ -1,4 +1,4 @@
-package dev.akursekova.app;
+package dev.akursekova.app.questionService;
 
 import lombok.Builder;
 
@@ -9,5 +9,9 @@ public class Answer {
 
     public String getText() {
         return text;
+    }
+
+    public Question getNextQuestion() {
+        return nextQuestion;
     }
 }

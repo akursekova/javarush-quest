@@ -1,5 +1,9 @@
 package dev.akursekova.app;
 
+import dev.akursekova.app.questionService.QuestService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -7,15 +11,16 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class AppServletContextListener implements ServletContextListener {
+
+    private static final Logger LOG = LogManager.getLogger(AppServletContextListener.class);
+
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        System.out.println("ServletContextListener started");
-
-        //storing connection object as an attribute in ServletContext
+        LOG.info("ServletContextListener started");
         ServletContext context = event.getServletContext();
         QuestService questService = QuestService.getInstance();
-        System.out.println("questService has been created: " + questService);
+        LOG.info("questService has been created: " + questService);
         context.setAttribute("questService", questService);
-        System.out.println("questService has been added to the servletContext: " + context.getAttribute("questService"));
+        LOG.info("questService has been added to the servletContext: " + context.getAttribute("questService"));
     }
 }

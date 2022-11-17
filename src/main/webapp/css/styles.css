@@ -55,7 +55,6 @@ input[type=submit] {
     padding: 5px 15px;
     background: cornflowerblue;
     border: 0 none;
-    /*text-decoration-color: aliceblue;*/
     color: aliceblue;
     font-family: Copperplate;
     cursor: pointer;
@@ -67,7 +66,7 @@ input[type=text] {
     background: azure;
     border-color: azure;
     box-shadow: azure;
-    border-style:solid;
+    border-style: solid;
     border-radius: 5px;
     font-family: Copperplate;
     color: hotpink;
@@ -75,13 +74,12 @@ input[type=text] {
 }
 
 .modal-backdrop {
-    /* bug fix - no overlay */
     display: none;
     z-index: -1;
 }
 
 .modal {
     z-index: 9999;
-    background-color:transparent!important;
+    background-color: transparent !important;
 }
 

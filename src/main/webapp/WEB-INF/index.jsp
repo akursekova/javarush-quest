@@ -19,13 +19,14 @@
         Getting to know the crew<br>
         When you boarded the ship, you were greeted by a girl with a black folder in her hands:<br>
         - Hello, commander! I am Zinaida - your helper. Do you see? <br>
-        There, in the corner, our navigator, Sergeant Peregarny Shleif, is drinking coffee, our flight mechanic, Cherny Bogdan,
+        There, in the corner, our navigator, Sergeant Peregarny Shleif, is drinking coffee, our flight mechanic, Cherny
+        Bogdan,
         is sleeping under the helm, and Sergey Stalnaya Pyatka, our navigator, is photographing him.<br>
         And what is your name?<br>
 
         <form action="quest" method="post">
-            Username: <input type="text" id="username" name="name" />
-            <input type="submit" id="submit" value="Introduce yourself" />
+            Username: <input type="text" id="username" name="name"/>
+            <input type="submit" id="submit" value="Introduce yourself"/>
         </form>
     </div>
 </div>

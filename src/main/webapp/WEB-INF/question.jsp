@@ -1,8 +1,8 @@
-<%@ page import="dev.akursekova.app.Question" %>
+<%@ page import="dev.akursekova.app.questionService.Question" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <!doctype html>
 <html>
 
@@ -22,15 +22,14 @@
     <div class="centered">
         <form action="quest" method="POST">
             <body>
-            <% Question currentQuestion=(Question)session.getAttribute("currentQuestion"); %>
+            <% Question currentQuestion = (Question) session.getAttribute("currentQuestion"); %>
             <%=currentQuestion.getText() %><br>
 
             <ul>
                 <c:forEach var="answer" items="${currentAnswers}" varStatus="loop">
-                    <%--            <li><c:out value="${answer.getText()}" /></li>--%>
-<%--                    <input type="radio" name="decision" value="${loop.index}" />${answer.getText()}<br>--%>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="decision" id="flexRadioDefault1" value="${loop.index}">
+                        <input class="form-check-input" type="radio" name="decision" id="flexRadioDefault1"
+                               value="${loop.index}">
                         <label class="form-check-label" for="flexRadioDefault1">
                                 ${answer.getText()}
                         </label>
@@ -42,16 +41,16 @@
 
             <c:choose>
                 <c:when test="${currentQuestion.isLoose() == 'true' || currentQuestion.isWin() == 'true'}">
-                    <input type="submit" name="answer" value="Restart" />
+                    <input type="submit" name="answer" value="Restart"/>
                 </c:when>
                 <c:otherwise>
-                    <input type="submit" onclick="checkButton()" name="answer" value="Answer" />
+                    <input type="submit" onclick="checkButton()" name="answer" value="Answer"/>
                 </c:otherwise>
             </c:choose>
 
             <%
-                String user=(String)session.getAttribute("user");
-                String ipAddress=(String)session.getAttribute("ipAddress");
+                String user = (String) session.getAttribute("user");
+                String ipAddress = (String) session.getAttribute("ipAddress");
                 Integer numberOfGames = (Integer) session.getAttribute("numberOfGames");
 
             %>
@@ -71,14 +70,17 @@
                         </div>
                         <div class="modal-body">
                             <p>
-                                IP address: <b> <%=ipAddress %></b> <br>
-                                Entered name: <b> <%=user %></b> <br>
-                                Completed games: <b> <%=numberOfGames %></b> <br>
+                                IP address: <b><%=ipAddress %>
+                            </b> <br>
+                                Entered name: <b><%=user %>
+                            </b> <br>
+                                Completed games: <b><%=numberOfGames %>
+                            </b> <br>
                             </p>
                         </div>
-                        <%--            <div class="modal-footer">--%>
-                        <%--                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
-                        <%--            </div>--%>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,13 +94,13 @@
     function checkButton() {
         let getSelectedValue = document.querySelector(
             'input[name="decision"]:checked');
-        if(getSelectedValue == null) {
+        if (getSelectedValue == null) {
             alert(`Please make a decision`);
         }
     }
 
-    $(document).ready(function(){
-        $("#myBtn").click(function(){
+    $(document).ready(function () {
+        $("#myBtn").click(function () {
             $("#myModal").modal('show');
         });
     });
