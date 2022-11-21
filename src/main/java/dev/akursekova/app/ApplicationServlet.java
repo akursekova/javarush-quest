@@ -21,29 +21,30 @@ public class ApplicationServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(ApplicationServlet.class);
 
     private QuestService questService = null;
-    private int numberOfGames = 0;
+    private UserRepository userRepository = null;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         ServletContext context = config.getServletContext();
         questService = (QuestService) context.getAttribute("questService");
+        userRepository = (UserRepository) context.getAttribute("userRepository");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOG.info("doGet started");
         HttpSession session = request.getSession(true);
+        User user = (User) session.getAttribute("user");
+        LOG.info("doGet started. User = " + user + ". Session id = " + session.getId());
 
         if (!userNameSpecified(session)) {
             request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-            LOG.info("userName not specified");
+            LOG.info("userName not specified: " + user.getName());
             return;
         }
 
         if (isFirstQuestion(session) || questRestarted(session)) {
-            LOG.info("first question or restarted game");
             setFirstQuestion(questService, session);
-            session.setAttribute("questRestarted", false);
+            user.setQuestRestarted(false);
         }
 
         Question currentQuestion = (Question) session.getAttribute("currentQuestion");
@@ -53,13 +54,12 @@ public class ApplicationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOG.info("doPost started");
         HttpSession session = request.getSession(true);
-        int numberOfGames;
+        User user = (User) session.getAttribute("user");
+        LOG.info("doPost started. User = " + user + ". Session id = " + session.getId());
 
         if (!userNameSpecified(session)) {
-            initializeStatistics(session, request);
-            LOG.debug("User specified it's name: user = " + session.getAttribute("user") + ", session_ID = " + session.getId());
+            initializeNewUser(session, request);
             response.sendRedirect(request.getContextPath() + "/quest");
         } else {
             String buttonClicked = request.getParameter("answer");
@@ -67,7 +67,7 @@ public class ApplicationServlet extends HttpServlet {
                 Question currentQuestion = (Question) session.getAttribute("currentQuestion");
 
                 if (!answerSelected(request)) {
-                    LOG.info("answer not selected");
+                    LOG.info("For the question: \'" + currentQuestion.getText() + "\' answer not selected");
                     request.getRequestDispatcher("/WEB-INF/question.jsp").forward(request, response);
                 }
 
@@ -75,33 +75,38 @@ public class ApplicationServlet extends HttpServlet {
                 currentQuestion = currentQuestion.getAnswers().get(userChoice).getNextQuestion();
 
                 if (gameFinished(currentQuestion)) {
-                    numberOfGames = (int) session.getAttribute("numberOfGames") + 1;
-                    session.setAttribute("numberOfGames", numberOfGames);
+                    LOG.info("User " + user.getName() + " finished the game.");
+                    int numberOfGames = user.getNumberOfGames();
+                    user.setNumberOfGames(numberOfGames + 1);
                 }
 
                 session.setAttribute("currentQuestion", currentQuestion);
                 response.sendRedirect(request.getContextPath() + "/quest");
             } else {
-                session.setAttribute("questRestarted", true);
+                user.setQuestRestarted(true);
                 response.sendRedirect(request.getContextPath() + "/quest");
             }
         }
     }
 
     private boolean questRestarted(HttpSession session) {
-        boolean questRestarted = (Boolean) session.getAttribute("questRestarted");
-        return questRestarted ? true : false;
+        User user = (User) session.getAttribute("user");
+        return user.getQuestRestarted();
     }
 
-    private void initializeStatistics(HttpSession session, HttpServletRequest request) {
-        numberOfGames = 0;
-        String user = request.getParameter("name");
-        String ipAddress = request.getRemoteAddr();
+    private void initializeNewUser (HttpSession session, HttpServletRequest request) {
+        User user = new User();
 
+        String userName = request.getParameter("name");
+
+        user.setName(userName);
+        user.setNumberOfGames(0);
+        user.setIpAddress(request.getRemoteAddr());
+        user.setQuestRestarted(false);
+
+        userRepository.add(user);
         session.setAttribute("user", user);
-        session.setAttribute("ipAddress", ipAddress);
-        session.setAttribute("numberOfGames", numberOfGames);
-        session.setAttribute("questRestarted", false);
+        LOG.info("New User registered. User name = " + userName + ". Number of played games = " + user.getNumberOfGames() + ". ");
     }
 
     private boolean gameFinished(Question question) {
@@ -126,3 +131,8 @@ public class ApplicationServlet extends HttpServlet {
     }
 }
 
+
+//todo тех атрибуты на сервисный уровень
+//todo лекция от четверга объясняли про юнит тесты. Попробовать начать писать тесты (22.11.)
+//todo исправить логер что писать в логи (21.11.)
+//todo можно добавить инфу юзер, колисечтво игр, на каждый старт дуГет дуПост

@@ -22,5 +22,7 @@ public class AppServletContextListener implements ServletContextListener {
         LOG.info("questService has been created: " + questService);
         context.setAttribute("questService", questService);
         LOG.info("questService has been added to the servletContext: " + context.getAttribute("questService"));
+        context.setAttribute("userRepository", new UserRepository());
+        LOG.info("userRepository has been added to the servletContext: " + context.getAttribute("userRepository"));
     }
 }

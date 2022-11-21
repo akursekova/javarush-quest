@@ -1,4 +1,5 @@
 <%@ page import="dev.akursekova.app.questionService.Question" %>
+<%@ page import="dev.akursekova.app.User" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -48,11 +49,16 @@
                 </c:otherwise>
             </c:choose>
 
-            <%
-                String user = (String) session.getAttribute("user");
+           <%--<%
+                String user = (String) session.getAttribute("user").getName();
                 String ipAddress = (String) session.getAttribute("ipAddress");
                 Integer numberOfGames = (Integer) session.getAttribute("numberOfGames");
+            %>--%>
 
+            <%
+                User user = (User) session.getAttribute("user");
+                Integer numberOfGames = user.getNumberOfGames();
+                String ipAddress = user.getIpAddress();
             %>
 
             <!-- Trigger the modal with a button -->
@@ -70,12 +76,12 @@
                         </div>
                         <div class="modal-body">
                             <p>
+                                Entered name: <b><%=user.getName() %>
+                            </b> <br>
                                 IP address: <b><%=ipAddress %>
                             </b> <br>
-                                Entered name: <b><%=user %>
-                            </b> <br>
                                 Completed games: <b><%=numberOfGames %>
-                            </b> <br>
+                           </b> <br>
                             </p>
                         </div>
                         <div class="modal-footer">
