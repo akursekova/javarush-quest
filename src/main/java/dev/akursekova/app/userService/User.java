@@ -1,5 +1,8 @@
-package dev.akursekova.app;
+package dev.akursekova.app.userService;
 
+import lombok.Data;
+
+@Data
 public class User {
     private String name;
     private Integer numberOfGames;

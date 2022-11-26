@@ -1,6 +1,7 @@
 package dev.akursekova.app;
 
-import dev.akursekova.app.questionService.QuestService;
+import dev.akursekova.app.questionService.QuestionService;
+import dev.akursekova.app.userService.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,9 +19,9 @@ public class AppServletContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         LOG.info("ServletContextListener started");
         ServletContext context = event.getServletContext();
-        QuestService questService = QuestService.getInstance();
-        LOG.info("questService has been created: " + questService);
-        context.setAttribute("questService", questService);
+        QuestionService questionService = QuestionService.getInstance();
+        LOG.info("questService has been created: " + questionService);
+        context.setAttribute("questService", questionService);
         LOG.info("questService has been added to the servletContext: " + context.getAttribute("questService"));
         context.setAttribute("userRepository", new UserRepository());
         LOG.info("userRepository has been added to the servletContext: " + context.getAttribute("userRepository"));

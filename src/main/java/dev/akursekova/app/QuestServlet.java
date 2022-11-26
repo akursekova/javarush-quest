@@ -1,7 +1,9 @@
 package dev.akursekova.app;
 
-import dev.akursekova.app.questionService.QuestService;
+import dev.akursekova.app.questionService.QuestionService;
 import dev.akursekova.app.questionService.Question;
+import dev.akursekova.app.userService.User;
+import dev.akursekova.app.userService.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,18 +18,18 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "ApplicationServlet", value = "/quest")
-public class ApplicationServlet extends HttpServlet {
+public class QuestServlet extends HttpServlet {
 
-    private static final Logger LOG = LogManager.getLogger(ApplicationServlet.class);
+    private static final Logger LOG = LogManager.getLogger(QuestServlet.class);
 
-    private QuestService questService = null;
+    private QuestionService questionService = null;
     private UserRepository userRepository = null;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         ServletContext context = config.getServletContext();
-        questService = (QuestService) context.getAttribute("questService");
+        questionService = (QuestionService) context.getAttribute("questService");
         userRepository = (UserRepository) context.getAttribute("userRepository");
     }
 
@@ -38,12 +40,12 @@ public class ApplicationServlet extends HttpServlet {
 
         if (!userNameSpecified(session)) {
             request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-            LOG.info("userName not specified: " + user.getName());
+            LOG.info("userName not specified: " + user);
             return;
         }
 
         if (isFirstQuestion(session) || questRestarted(session)) {
-            setFirstQuestion(questService, session);
+            setFirstQuestion(questionService, session);
             user.setQuestRestarted(false);
         }
 
@@ -75,7 +77,7 @@ public class ApplicationServlet extends HttpServlet {
                 currentQuestion = currentQuestion.getAnswers().get(userChoice).getNextQuestion();
 
                 if (gameFinished(currentQuestion)) {
-                    LOG.info("User " + user.getName() + " finished the game.");
+                    LOG.info("User " + user.getName() + " finished the game. Number of played games = " + user.getNumberOfGames() + ".");
                     int numberOfGames = user.getNumberOfGames();
                     user.setNumberOfGames(numberOfGames + 1);
                 }
@@ -121,8 +123,8 @@ public class ApplicationServlet extends HttpServlet {
         return (session.getAttribute("currentQuestion") == null);
     }
 
-    private void setFirstQuestion(QuestService questService, HttpSession session) {
-        Question currentQuestion = questService.init();
+    private void setFirstQuestion(QuestionService questionService, HttpSession session) {
+        Question currentQuestion = questionService.init();
         session.setAttribute("currentQuestion", currentQuestion);
     }
 
@@ -134,5 +136,4 @@ public class ApplicationServlet extends HttpServlet {
 
 //todo тех атрибуты на сервисный уровень
 //todo лекция от четверга объясняли про юнит тесты. Попробовать начать писать тесты (22.11.)
-//todo исправить логер что писать в логи (21.11.)
-//todo можно добавить инфу юзер, колисечтво игр, на каждый старт дуГет дуПост
+//todo public final class QuestService { or public class QuestService {

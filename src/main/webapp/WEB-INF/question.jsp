@@ -1,5 +1,5 @@
 <%@ page import="dev.akursekova.app.questionService.Question" %>
-<%@ page import="dev.akursekova.app.User" %>
+<%@ page import="dev.akursekova.app.userService.User" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>

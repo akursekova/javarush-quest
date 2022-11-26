@@ -1,4 +1,4 @@
-package dev.akursekova.app;
+package dev.akursekova.app.userService;
 
 import java.util.HashMap;
 

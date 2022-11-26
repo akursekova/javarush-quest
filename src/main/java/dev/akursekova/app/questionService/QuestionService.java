@@ -2,8 +2,8 @@ package dev.akursekova.app.questionService;
 
 import java.util.List;
 
-public final class QuestService {
-    private static QuestService questServiceInstance;
+public class QuestionService {
+    private static QuestionService questionServiceInstance;
 
     public Question init() {
         Question q1 = Question.builder()
@@ -71,11 +71,11 @@ public final class QuestService {
     }
 
 
-    public static QuestService getInstance() {
-        if (questServiceInstance == null) {
-            questServiceInstance = new QuestService();
+    public static QuestionService getInstance() {
+        if (questionServiceInstance == null) {
+            questionServiceInstance = new QuestionService();
         }
 
-        return questServiceInstance;
+        return questionServiceInstance;
     }
 }
