@@ -1,9 +1,9 @@
 package dev.akursekova.app;
 
-import dev.akursekova.app.questionService.QuestionService;
-import dev.akursekova.app.questionService.Question;
-import dev.akursekova.app.userService.User;
-import dev.akursekova.app.userService.UserRepository;
+import dev.akursekova.app.service.QuestionService;
+import dev.akursekova.app.repository.UserRepository;
+import dev.akursekova.app.subjects.Question;
+import dev.akursekova.app.subjects.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,6 +39,7 @@ public class QuestServlet extends HttpServlet {
         LOG.info("doGet started. User = " + user + ". Session id = " + session.getId());
 
         if (!userNameSpecified(session)) {
+            System.out.println("doGet. User name mot specified");
             request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
             LOG.info("userName not specified: " + user);
             return;
@@ -61,6 +62,7 @@ public class QuestServlet extends HttpServlet {
         LOG.info("doPost started. User = " + user + ". Session id = " + session.getId());
 
         if (!userNameSpecified(session)) {
+            System.out.println("doPost. Username not specified. ");
             initializeNewUser(session, request);
             response.sendRedirect(request.getContextPath() + "/quest");
         } else {
@@ -108,6 +110,7 @@ public class QuestServlet extends HttpServlet {
 
         userRepository.add(user);
         session.setAttribute("user", user);
+        System.out.println("username now = " + user.getName());
         LOG.info("New User registered. User name = " + userName + ". Number of played games = " + user.getNumberOfGames() + ". ");
     }
 

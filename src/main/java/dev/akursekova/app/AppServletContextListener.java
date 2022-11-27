@@ -1,7 +1,7 @@
 package dev.akursekova.app;
 
-import dev.akursekova.app.questionService.QuestionService;
-import dev.akursekova.app.userService.UserRepository;
+import dev.akursekova.app.service.QuestionService;
+import dev.akursekova.app.repository.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package dev.akursekova.app.questionService;
+package dev.akursekova.app.subjects;
 
 import lombok.Builder;
 

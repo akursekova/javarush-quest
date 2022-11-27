@@ -1,4 +1,4 @@
-package dev.akursekova.app.userService;
+package dev.akursekova.app.subjects;
 
 import lombok.Data;
 

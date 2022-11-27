@@ -1,14 +1,13 @@
 package dev.akursekova.app;
 
-import dev.akursekova.app.questionService.Answer;
-import dev.akursekova.app.questionService.QuestionService;
-import dev.akursekova.app.questionService.Question;
-import dev.akursekova.app.userService.User;
-import dev.akursekova.app.userService.UserRepository;
+import dev.akursekova.app.service.QuestionService;
+import dev.akursekova.app.repository.UserRepository;
+import dev.akursekova.app.subjects.Answer;
+import dev.akursekova.app.subjects.Question;
+import dev.akursekova.app.subjects.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -30,34 +28,6 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class QuestServletTest {
-
-//    @Mock
-//    HttpServletRequest request;
-//
-//    @Mock
-//    HttpServletResponse response;
-//
-//    @Mock
-//    ServletConfig servletConfig;
-//
-//    @Mock
-//    ServletContext servletContext;
-//
-//    @Mock
-//    QuestService questService;
-//
-//    @Mock
-//    UserRepository userRepository;
-//
-//    @Mock
-//    HttpSession session;
-//
-//    @Mock
-//    RequestDispatcher requestDispatcher;
-
-    //    @Mock
-//    User user;
-
     HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
     HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
     ServletConfig servletConfig = Mockito.mock(ServletConfig.class);
@@ -68,7 +38,6 @@ class QuestServletTest {
     RequestDispatcher requestDispatcher = Mockito.mock(RequestDispatcher.class);
     User user = Mockito.mock(User.class);
     Question question = Mockito.mock(Question.class);
-
     QuestServlet questServlet;
 
     @BeforeEach
@@ -82,7 +51,6 @@ class QuestServletTest {
         questServlet = new QuestServlet();
         questServlet.init(servletConfig);
     }
-
 
     @Test
     void doGet_WhenUserNameNotSpecified() throws ServletException, IOException {
@@ -167,7 +135,7 @@ class QuestServletTest {
     }
 
     @Test
-    void doPost_OptionNotChosenButAnswerButtonClicked() throws ServletException, IOException {
+    void doPost_AnswerButtonClickedButOptionNotChosen() throws ServletException, IOException {
         Question fakeQuestion = Mockito.mock(Question.class);
         List<Answer> fakeAnswers = Mockito.mock(List.class);
         Answer firsFakeAnswer = Mockito.mock(Answer.class);
@@ -242,4 +210,15 @@ class QuestServletTest {
         verify(response).sendRedirect("contextPath" + "/quest");
     }
 
+    @Test
+    void doPost_RestartButtonClicked() throws ServletException, IOException {
+        Mockito.when(session.getAttribute("user")).thenReturn(user);
+        Mockito.when(request.getParameter("answer")).thenReturn("Restart");
+        Mockito.when(request.getContextPath()).thenReturn("contextPath");
+
+        questServlet.doPost(request, response);
+
+        verify(user).setQuestRestarted(true);
+        verify(response).sendRedirect("contextPath" + "/quest");
+    }
 }

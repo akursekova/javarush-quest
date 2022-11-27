@@ -1,4 +1,7 @@
-package dev.akursekova.app.questionService;
+package dev.akursekova.app.service;
+
+import dev.akursekova.app.subjects.Answer;
+import dev.akursekova.app.subjects.Question;
 
 import java.util.List;
 
