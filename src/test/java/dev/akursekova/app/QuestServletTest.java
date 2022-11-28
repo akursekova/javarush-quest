@@ -46,7 +46,7 @@ class QuestServletTest {
         Mockito.when(servletContext.getAttribute("questService")).thenReturn(questionService);
         Mockito.when(servletContext.getAttribute("userRepository")).thenReturn(userRepository);
         Mockito.when(request.getSession(true)).thenReturn(session);
-        Mockito.when(request.getRequestDispatcher(eq("/WEB-INF/index.jsp"))).thenReturn(requestDispatcher);
+
 
         questServlet = new QuestServlet();
         questServlet.init(servletConfig);
@@ -55,7 +55,10 @@ class QuestServletTest {
     @Test
     void doGet_WhenUserNameNotSpecified() throws ServletException, IOException {
         Mockito.when(request.getAttribute("user")).thenReturn(null);
+        Mockito.when(request.getRequestDispatcher(eq("/WEB-INF/index.jsp"))).thenReturn(requestDispatcher);
+
         questServlet.doGet(request, response);
+
         verify(requestDispatcher).forward(request, response);
     }
 
@@ -123,14 +126,11 @@ class QuestServletTest {
 
         questServlet.doPost(request, response);
 
-        verify(userRepository, times(1)).add(argThat((user -> {
-           boolean nameMatches = user.getName().equals("test");
-           boolean ipMatches = user.getIpAddress().equals("0:0:0:0:0:0:0:1");
-           boolean numOfGamesMatches = user.getNumberOfGames().equals(0);
-           boolean questRestartedMatches = user.getQuestRestarted().equals(false);
-           return nameMatches && ipMatches && numOfGamesMatches && questRestartedMatches;
-        })));
-        verify(session,times(1)).setAttribute(eq("user"), eq(fakeUser));
+        verify(userRepository, times(1)).add(argThat((
+                user -> user.getIpAddress().equals("0:0:0:0:0:0:0:1") &&
+                        user.getNumberOfGames().equals(0) &&
+                        user.getQuestRestarted().equals(false))));
+        verify(session, times(1)).setAttribute(eq("user"), eq(fakeUser));
         verify(response).sendRedirect("contextPath" + "/quest");
     }
 

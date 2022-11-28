@@ -39,7 +39,6 @@ public class QuestServlet extends HttpServlet {
         LOG.info("doGet started. User = " + user + ". Session id = " + session.getId());
 
         if (!userNameSpecified(session)) {
-            System.out.println("doGet. User name mot specified");
             request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
             LOG.info("userName not specified: " + user);
             return;
@@ -62,7 +61,6 @@ public class QuestServlet extends HttpServlet {
         LOG.info("doPost started. User = " + user + ". Session id = " + session.getId());
 
         if (!userNameSpecified(session)) {
-            System.out.println("doPost. Username not specified. ");
             initializeNewUser(session, request);
             response.sendRedirect(request.getContextPath() + "/quest");
         } else {
@@ -110,7 +108,6 @@ public class QuestServlet extends HttpServlet {
 
         userRepository.add(user);
         session.setAttribute("user", user);
-        System.out.println("username now = " + user.getName());
         LOG.info("New User registered. User name = " + userName + ". Number of played games = " + user.getNumberOfGames() + ". ");
     }
 
