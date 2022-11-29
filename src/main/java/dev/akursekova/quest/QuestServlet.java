@@ -1,9 +1,9 @@
-package dev.akursekova.app;
+package dev.akursekova.quest;
 
-import dev.akursekova.app.service.QuestionService;
-import dev.akursekova.app.repository.UserRepository;
-import dev.akursekova.app.subjects.Question;
-import dev.akursekova.app.subjects.User;
+import dev.akursekova.quest.service.QuestionService;
+import dev.akursekova.quest.repository.UserRepository;
+import dev.akursekova.quest.subjects.Question;
+import dev.akursekova.quest.subjects.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "ApplicationServlet", value = "/quest")
+@WebServlet(name = "QuestServlet", value = "/quest")
 public class QuestServlet extends HttpServlet {
 
     private static final Logger LOG = LogManager.getLogger(QuestServlet.class);
@@ -96,7 +96,7 @@ public class QuestServlet extends HttpServlet {
         return user.getQuestRestarted();
     }
 
-    private void initializeNewUser (HttpSession session, HttpServletRequest request) {
+    private void initializeNewUser(HttpSession session, HttpServletRequest request) {
         User user = new User();
 
         String userName = request.getParameter("name");
@@ -132,8 +132,3 @@ public class QuestServlet extends HttpServlet {
         return (session.getAttribute("user") != null);
     }
 }
-
-
-//todo тех атрибуты на сервисный уровень
-//todo лекция от четверга объясняли про юнит тесты. Попробовать начать писать тесты (22.11.)
-//todo public final class QuestService { or public class QuestService {

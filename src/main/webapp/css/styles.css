@@ -84,8 +84,6 @@ input[type=text] {
     background-color: transparent !important;
 }
 
-/*works fine*/
-
 .modal-content {
     height: 160px;
     overflow-y: clip;
@@ -97,7 +95,7 @@ input[type=text] {
 }
 
 .btn.btn-primary.btn-md {
-    background-color:cornflowerblue;
+    background-color: cornflowerblue;
     border: 0 none;
     color: aliceblue;
 
@@ -106,6 +104,3 @@ input[type=text] {
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
-
-
-

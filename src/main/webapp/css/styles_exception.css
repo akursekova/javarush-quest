@@ -1,0 +1,28 @@
+/* Container holding the image and the text */
+.container {
+    position: relative;
+    text-align: center;
+    color: hotpink;
+}
+
+/* Top left text */
+.top-left {
+    width: 650px;
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-family: Copperplate;
+    text-align: justify;
+    font-size: large;
+}
+
+input[type=submit] {
+    padding: 5px 15px;
+    background: hotpink;
+    border: 0 none;
+    color: aliceblue;
+    font-family: Copperplate;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}

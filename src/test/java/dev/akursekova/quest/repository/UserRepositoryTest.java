@@ -1,9 +1,8 @@
-package dev.akursekova.app.repository;
+package dev.akursekova.quest.repository;
 
-import dev.akursekova.app.subjects.User;
+import dev.akursekova.quest.subjects.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.Map;

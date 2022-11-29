@@ -1,10 +1,10 @@
-package dev.akursekova.app;
+package dev.akursekova.quest;
 
-import dev.akursekova.app.service.QuestionService;
-import dev.akursekova.app.repository.UserRepository;
-import dev.akursekova.app.subjects.Answer;
-import dev.akursekova.app.subjects.Question;
-import dev.akursekova.app.subjects.User;
+import dev.akursekova.quest.service.QuestionService;
+import dev.akursekova.quest.repository.UserRepository;
+import dev.akursekova.quest.subjects.Answer;
+import dev.akursekova.quest.subjects.Question;
+import dev.akursekova.quest.subjects.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

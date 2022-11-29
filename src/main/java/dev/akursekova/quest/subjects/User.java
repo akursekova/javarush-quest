@@ -1,4 +1,4 @@
-package dev.akursekova.app.subjects;
+package dev.akursekova.quest.subjects;
 
 import lombok.Data;
 
