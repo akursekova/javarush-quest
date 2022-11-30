@@ -45,7 +45,10 @@ Deploy war file on Tomcat Docker Container
 - Установить [Docker](https://docs.docker.com/install)
 - Перейти по ссылке https://github.com/akursekova/javarush-quest/tree/dev and нажать Donwnload ZIP
 - Имя скачанного проекта будет javarush-quest-dev, так как проект скачан из dev ветки
-- Открыть Terminal и запустить команду cd javarush-quest-dev # из root directory
+- Открыть проект в IntelliJ IDEA 
+- Открыть Terminal в IntelliJ IDEA  
+- Запустить команду  % mvn clean install: сгенерируется папка target, в котрой будет находиться javarush-quest.war  
+- Запустить команду cd javarush-quest-dev # из root directory
 - $docker build -t javarush-quest-dev .
 - $docker run -p 7777:8080 javarush-quest-dev
 - http://localhost:7777/javarush-quest/quest
@@ -56,20 +59,28 @@ Deploy war file on Tomcat Docker Container
 
 # Краткое описание классов
 
+Данный квест - это Maven-проект, в котором соблюдена стандартная для Maven-проекта структура:
+- в папке src/main/java содержатся java-классы
+- в src/main/resources — ресурсы, которые использует данное приложение
+- src/test — пакет для хранения тестов. 
+
+`pom.xml` лежит в корне проекта и содержит все необоходимые для корректного функционирования проекта Maven зависимости.
+
 В корневом пакете проекта `dev.akursekova.quest` хранятся классы:
-- AppServletContextListener
-- ExceptionHandlerServlet
-- QuestServlet,  
+- `AppServletContextListener`
+- `ExceptionHandlerServlet`
+- `QuestServlet`,  
 
 а также пакеты:
-- repository
-- service
-- subjects
+- `repository`
+- `service`
+- `subjects`
 
 В пакете `subjects` содержатся классы, описывающие основные объекты данного квеста:
-- User
-- Question
-- Answer
+- `User`
+- `Question`
+- `Answer`  
+
 
 - `User`: описывает общие поля и методы, принадлежащие игроку, принимающему участие в игре.
 - `Question`, `Answer`: отвечает за поля и методы вопросов/ответов, появляющихся в игре.
@@ -88,11 +99,37 @@ Deploy war file on Tomcat Docker Container
 
 Класс `ExceptionHandlerServlet`, ответственный за обработку ошибок. 
 
-В папке `WEB-INF` хранятся все jsp страницы проекта:
-- `index.jsp`: jsp, описывающее приветственную страницу
-- `question.jsp`: jsp, в которой описано отображение вопросов, ответов, в также кнопки [Answer], [Restart], [Statistics]
-- `exception.jsp`: jsp, на которую происходит редирект из ExceptionHandlerServlet в момент, когда в квесте произошла какая-либо ошибка
+В пакете `webapp`, находщему по пути src/main/webapp хранятся 3 директории:
+- `css` - пакет, где хранятся стили, используемые jsp страницами
+- `img` - пакет, где хранится изображение, используемое для фона квеста
+- `WEB-INF` - пакет, где хранятся все jsp страницы проекта:
+  - `index.jsp`: jsp, ответственное за приветственную страницу
+  - `question.jsp`: jsp, в которой описана логика отображения вопросов, ответов, в также кнопки [Answer], [Restart], [Statistics]
+  - `exception.jsp`: jsp, на которую происходит редирект из ExceptionHandlerServlet в момент, когда в квесте произошла какая-либо ошибка
 
-В папке `css` хранятся стили, используемые jsp страницами
-В папке `img` хранится картинка, используемая для фона квеста
+# Логирование
+К данному проекту подключен логер Log4j.  
+Логер сконфигурирован в xml формате. 
+Конфигурация хранится по пути `src/main/resources/log4j2.xml`.
+Логи записываются в файл, расположенный по пути `"/Users/alinakursekova/Downloads/javarush-quest/logs/quest.log"`. 
+Если данное приложение будет запускаться на другом компьютере, для корректной работы логера нужно указать путь к файлу на локальном компьютере.
+
+# Тестирование
+Логика данного квеста покрыта тестами. Тесты написаны с использованием JUnit5 и Mockito.
+
+В классе `dev.akursekova.quest.QuestServletTest` находятся тесты, покрывающие основную бизнесс логику квеста.
+Тесты проверяют различные сценарии, как негативные так и позитивные для методов doGet и doPost. 
+Примеры сценариев, покрытых тестами: 
+- проверка поведения, если новый пользователь начал игру
+- проверка поведения, когда пользователь не выбрал ни один из ответов, но нажал кнопку [Answer]
+- проверка поведения, когда пользователь нажимает на кнопку [Restart] 
+
+В классе `dev.akursekova.quest.repository.UserRepositoryTest` находятся тесты, покрывающие функионал, 
+ответственный за добавление нового пользователя в репозиторий.
+Примеры сценариев, покрытых тестами: 
+- проверка поведения, когда новый пользователь но ввел свое имя и оставил поле пустым
+- проверка на существование пользователя в системе
+- проверка на добавление нового пользователя в репозиторий
+
+
 
