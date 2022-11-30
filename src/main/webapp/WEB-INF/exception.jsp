@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Oops</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value='/css/styles_exception.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/css/stylesException.css' />">
 </head>
 <body>
 <div class="container">
