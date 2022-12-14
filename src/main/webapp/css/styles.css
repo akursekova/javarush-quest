@@ -1,0 +1,105 @@
+/* Container holding the image and the text */
+.container {
+    position: relative;
+    text-align: center;
+    color: cornflowerblue;
+}
+
+/* Bottom left text */
+.bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    color: cornflowerblue;
+}
+
+/* Top left text */
+.top-left {
+    width: 450px;
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-family: Copperplate;
+    text-align: justify;
+    font-size: large;
+}
+
+/* Top right text */
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+}
+
+/* Centered text */
+.centered {
+    height: 200px;
+    width: 600px;
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Copperplate;
+    text-align: justify;
+    font-size: large;
+}
+
+input[type=submit] {
+    padding: 5px 15px;
+    background: cornflowerblue;
+    border: 0 none;
+    color: aliceblue;
+    font-family: Copperplate;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=text] {
+    background: azure;
+    border-color: azure;
+    box-shadow: azure;
+    border-style: solid;
+    border-radius: 5px;
+    font-family: Copperplate;
+    color: hotpink;
+    font-size: small;
+}
+
+.modal-backdrop {
+    display: none;
+    z-index: -1;
+}
+
+.modal {
+    z-index: 9999;
+    background-color: transparent !important;
+}
+
+.modal-content {
+    height: 160px;
+    overflow-y: clip;
+}
+
+.modal-header,
+.modal-footer {
+    height: 50px;
+}
+
+.btn.btn-primary.btn-md {
+    background-color: cornflowerblue;
+    border: 0 none;
+    color: aliceblue;
+
+    font-family: Copperplate;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
